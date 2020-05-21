@@ -12,33 +12,53 @@ def talker(action):
     aff = Affordance()
     ap = ActionParameters()
     target = Pose()
-    asc = AscPair()
+
 
     if action == "SuckingAction":
-        target.position.x = 0.2
-        target.position.y = 0.3
-        target.position.z = 0.4
+        aff.affordance_name = "SuckingAction"
+
+        asc = AscPair()
+        asc.key = "SuckingPose"
+        asc.value_type = 2
+        print("test me")
+        target.position.x = 0.240
+        target.position.y = 0.045
+        target.position.z = 0.000
         target.orientation.w = 0.7070
         target.orientation.x = 0.7070
         target.orientation.y = 0.0
         target.orientation.z = 0.0
-
         asc.value_pose = target
-        asc.value_double = 125.0
-        aff.affordance_name = "SuckingAction"
+        ap.parameters.append(asc)
+
+        asc1 = AscPair()
+        asc1.key = "SuckingPower"
+        asc1.value_type = 1
+        asc1.value_double = 5.0
+        ap.parameters.append(asc1)
+
 
     elif action == "TeachInAction":
         aff.affordance_name = "TeachInAction"
+
+        asc = AscPair()
         asc.key = "TeachInAction"
         asc.value_type = 0
         asc.value_str = "TeachInAction"
+        ap.parameters.append(asc)
 
     elif action == "UnscrewAction":
         pass
 
-    ap.parameters.append(asc)
     aff.action_parameters_array.append(ap)
-    rate = rospy.Rate(1) # 10hz
+
+
+#    test = "test ros2armarx action %s" % rospy.get_time()
+#    rospy.loginfo(test)
+#    pub.publish(aff)
+#    rospy.spin()
+
+    rate = rospy.Rate(1)
     while not rospy.is_shutdown():
         test = "test ros2armarx action %s" % rospy.get_time()
         rospy.loginfo(test)
